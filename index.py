@@ -139,6 +139,12 @@ def buscarCandidato(id):
     json = candidatoControl.find(id)
     return jsonify(json)
 
+"""ASIGNAR PARTIDO A UN CANDIDATO - (PUT)"""
+@app.route("/admin/candidato/<string:id>/partido/<string:id_partido>", methods=['PUT'])
+def asignarPartido(id, id_partido):
+    json = candidatoControl.asignarPartido(id, id_partido)
+    return jsonify(json)
+
 
 """RUTAS DE ADMIN --> MESAS VOTACION"""
 

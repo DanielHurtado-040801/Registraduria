@@ -1,42 +1,46 @@
 from models.candidato import Candidato
+from models.partido import Partido
+from repositorios.repositorioCandidato import RepositorioCandidato
+from repositorios.repositorioPartido import RepositorioPartido
 
 class CandidatoControl():
     
     def __init__(self):
-        print("Creando ControlCandidato")    
+        print("Creando ControlCandidato")
+        self.repo_partido = RepositorioPartido()
+        self.repo_candidato = RepositorioCandidato()
+        
+    """RELACION UNO A MUCHOS --> PARTIDO --> CANDIDATO"""  
+    def asignarPartido(self, id, id_partido):
+        candidato_actual = Candidato(self.repo_candidato.findById(id))
+        partido_actual = Partido(self.repo_partido.findById(id_partido))
+        candidato_actual.partido = partido_actual
+        return self.repo_candidato.save(candidato_actual)    
         
     def get(self):
-        candidato = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }    
-        return candidato
+        candidatos = self.repo_candidato.findAll()
+        return candidatos
     
     def create(self, datosCandidato):
-        print("Se ha creado crrectamente el partido")
         candidato = Candidato(datosCandidato)
+        datos_salida = self.repo_candidato.save(candidato)
+        return datos_salida
+    
+    def find(self, id):
+        buscar_candiadto = self.repo_candidato.findById(id)
+        candidato = Candidato(buscar_candiadto)
         return candidato.__dict__
     
     def update(self, id, datosCandidato):
-        print('candidato con el id: ' + id + ' actualizado correctamente')
-        candidato = Candidato(datosCandidato)
+        buscar_candiadto = self.repo_candidato.findById(id)
+        candidato = Candidato(buscar_candiadto)
+        candidato.resolution_number = datosCandidato["resolution_number"]
+        candidato.cedula = datosCandidato["cedula"]
+        candidato.name = datosCandidato["name"]
+        self.repo_candidato.save(candidato)
         return candidato.__dict__
-    
-    def find(self, id):
-        print('candidato con el id: ' + id + 'encontrado')
-        candidato = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }  
-        return candidato    
         
     def delete(self, id):
         print("candidato " + id + " eliminado")
-        candidato = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }   
+        candidato = self.repo_candidato.delete(id) 
         return candidato  
