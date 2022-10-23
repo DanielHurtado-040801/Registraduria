@@ -1,42 +1,35 @@
 from models.partido import Partido
+from repositorios.repositorioPartido import RepositorioPartido
 
 class PartidoControl():
     
     def __init__(self):
         print("Creando ControlPartido")    
+        self.repo_partido = RepositorioPartido()
         
     def get(self):
-        partido = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }    
+        partido = self.repo_partido.findAll()
         return partido
     
     def create(self, datosPartido):
-        print("Se ha creado crrectamente el partido")
         partido = Partido(datosPartido)
-        return partido.__dict__
+        datos_salida = self.repo_partido.save(partido)
+        return datos_salida
     
     def update(self, id, datosPartido):
-        print('partido con el id: ' + id + ' actualizado correctamente')
-        partido = Partido(datosPartido)
+        buscar_partido = self.repo_partido.findById(id)
+        partido = Partido(buscar_partido)
+        partido.name = datosPartido["name"]
+        partido.lema = datosPartido["lema"]
+        self.repo_partido.save(partido)
         return partido.__dict__
     
     def find(self, id):
-        print('partido con el id: ' + id + 'encontrado')
-        partido = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }  
-        return partido    
+        buscar_partido = self.repo_partido.findById(id)
+        partido = Partido(buscar_partido)
+        return partido.__dict__
         
     def delete(self, id):
         print("partido " + id + " eliminado")
-        partido = {
-            "id": 1,
-            "name": "0",
-            "lema": "Petrosky mi presidente..."
-        }   
-        return partido  
+        partido = self.repo_partido.delete(id)
+        return partido

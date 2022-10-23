@@ -1,17 +1,15 @@
 from models.jurado import Jurado
+from repositorios.repositorioJurado import RepositorioJurado
 
 class JuradoControl():
     
     def __init__(self):
         print("Creando ControlJurado")    
+        self.repo_jurado = RepositorioJurado()
         
     def get(self):
-        jurado = {
-            "id": 1,
-            "cedula_user": "123456789",
-            "Numero mesa": "1",
-        }    
-        return jurado
+        jurados = self.repo_jurado.findAll()
+        return jurados
     
     def create(self, datosJurado):
         print("Se ha creado crrectamente el jurado")
