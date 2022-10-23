@@ -39,7 +39,7 @@ def loadFileConfig():
 """RUTAS DE ADMIN --> USUARIOS"""
 
 """LISTAR USUARIOS (GET)"""
-@app.route("/admin/usuarios/",methods=['GET'])
+@app.route("/usuarios/",methods=['GET'])
 def getUsuarios():
     json=usuarioControl.get()
     return jsonify(json)
@@ -177,7 +177,7 @@ def bsucarMesa(id):
 
 """RUTAS DE ADMIN --> JURADOS"""
 
-"""LISTAR CANDIDATOS (GET)"""
+"""LISTAR JURADOS (GET)"""
 @app.route("/admin/jurados/",methods=['GET'])
 def getJurados():
     json=juradoControl.get()
