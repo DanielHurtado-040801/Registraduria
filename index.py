@@ -215,6 +215,13 @@ def buscarJurado(id):
     json = juradoControl.find(id)
     return jsonify(json)
 
+"""ASIGNAR AL JURADO UN LA CUENTA USUARIO POR CEDULA Y EL NUMERO DE MESA - (PUT)"""
+@app.route("/jurados/asignar_mesa_user/<string:id_user>/<string:id_mesa>/<string:id_jurado>", methods=['PUT'])
+def asignar_mesa_user(id_user,id_mesa,id_jurado):
+    json = juradoControl.asignar_mesa_cedula(id_user, id_mesa, id_jurado)
+    return jsonify(json)
+
+
 
 """RUTAS DE ADMIN --> PARTIDOS"""
 

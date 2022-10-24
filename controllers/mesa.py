@@ -1,39 +1,34 @@
 from models.mesa import Mesa
+from repositorios.repositorioMesa import RepositorioMesa
 
 class MesaControl():
     
     def __init__(self):
-        print("Creando ControlMesa")    
+        print("Creando ControlMesa")  
+        self.mesa_repo = RepositorioMesa()  
         
     def get(self):
-        mesa = {
-            "Numero_mesa": 1,
-            "cantidad_cedulas_inscritas": "0",
-        }    
-        return mesa
+        mesas = self.mesa_repo.findAll()
+        return mesas
     
     def create(self, datosMesa):
-        print("Se ha creado crrectamente el mesa")
         mesa = Mesa(datosMesa)
-        return mesa.__dict__
+        datos_salida = self.mesa_repo.save(mesa)
+        return datos_salida
     
     def update(self, id, datosMesa):
-        print('mesa con el id: ' + id + ' actualizado correctamente')
-        mesa = Mesa(datosMesa)
+        buscar_mesa = self.mesa_repo.findById(id)
+        mesa = Mesa(buscar_mesa)
+        mesa.numero_mesa = datosMesa["numero_mesa"]
+        mesa.cedulas_inscritas = datosMesa["cedulas_inscritas"]
+        self.mesa_repo.save(mesa)
         return mesa.__dict__
     
     def find(self, id):
-        print('mesa con el id: ' + id + 'encontrado')
-        mesa = {
-            "Numero_mesa": 1,
-            "cantidad_cedulas_inscritas": "0",
-        }    
-        return mesa    
+        mesa = self.mesa_repo.findById(id) 
+        return mesa.__dict__    
         
     def delete(self, id):
-        print("mesa " + id + " eliminado")
-        mesa = {
-            "Numero_mesa": 1,
-            "cantidad_cedulas_inscritas": "0",
-        }    
+        print("Mesa " + id + " eliminada")
+        mesa = self.mesa_repo.delete(id)
         return mesa  
