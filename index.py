@@ -79,12 +79,16 @@ def getVotos():
     json=votosControl.get()
     return jsonify(json)
 
-"""CREAR UN VOTO - (POST)"""
-@app.route("/admin/votar",methods=['POST'])
-def createVoto():
-    dataEntrada = request.get_json()
-    dataSalida=votosControl.create(dataEntrada)
-    return jsonify(dataSalida)
+"""CREAR UN VOTO - (PUT)"""
+@app.route("/votar/<string:id_voto>/<string:id_user>/<string:id_mesa>/<string:id_candidato>",methods=['PUT'])
+def votacion(id_voto,id_user,id_mesa,id_candidato):
+    json = votosControl.votar(id_voto,id_user, id_mesa, id_candidato)
+    return jsonify(json)
+
+""" @app.route("/votar", methods=['PUT'])
+def votacion(id_voto,id_user,id_mesa,id_candidato):
+    json = votosControl.votar(id_voto,id_user, id_mesa, id_candidato)
+    return jsonify(json) """
 
 """ELIMINAAR UN VOTO - (DELETE)"""
 @app.route("/admin/votos/delete/<string:id>",methods=['DELETE'])
