@@ -17,7 +17,7 @@ class JuradoControl():
         jurados = self.repo_jurado.findAll()
         return jurados
     
-    def create(self, datosJurado):
+    def create(self):
         jurado = Jurado(datosJurado)
         datos_salida = self.repo_jurado.save(jurado)
         return datos_salida

@@ -120,8 +120,7 @@ def getCandidatos():
 """CREAR UN CANDIDATO - (POST)"""
 @app.route("/admin/candidatos",methods=['POST'])
 def createCandidato():
-    dataEntrada = request.get_json()
-    dataSalida=candidatoControl.create(dataEntrada)
+    dataSalida=candidatoControl.create()
     return jsonify(dataSalida)
 
 """ELIMINAAR UN CANDIDATO - (DELETE)"""
